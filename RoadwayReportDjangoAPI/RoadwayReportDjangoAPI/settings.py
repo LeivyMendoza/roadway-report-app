@@ -139,7 +139,11 @@ DATABASES = {
     }
 }
 
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True # for Prod should be False
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8081',
+    "http://localhost:4200",  # Angular's default port
+    # "https://your-frontend-domain.com",
 )
+
+AUTH_USER_MODEL = 'roadwayreport.User'

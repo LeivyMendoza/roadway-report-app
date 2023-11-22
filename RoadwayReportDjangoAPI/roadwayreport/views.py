@@ -2,6 +2,7 @@ from rest_framework import status
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from django.contrib.auth import authenticate
 from .models import Official, User, Leaderboard, Report, Notification, Media, Comment
 from .serializers import (
     OfficialSerializer, UserSerializer, LeaderboardSerializer,
@@ -82,7 +83,20 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @api_view(['POST'])
 def login_view(request):
-    pass
+    email = request.data.get('email')
+    password = request.data.get('password')
+
+    if not email or not password:
+        return Response({'error': 'Email and password are required.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    user = authenticate(email=email, password=password)
+
+    if user is not None:
+        # Successfully authenticated. You can add logic here to return a token or session ID.
+        return Response({'message': 'Login successful.'}, status=status.HTTP_200_OK)
+    else:
+        # Authentication failed
+        return Response({'error': 'Invalid credentials.'}, status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['GET'])
 def dashboard_info(request):

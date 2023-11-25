@@ -1,0 +1,62 @@
+<!-- dashboard.component.html -->
+<mat-card class="info-card">
+    <mat-card-title>Non-Resolved Potholes</mat-card-title>
+    <mat-card-content>
+      <p>Number of potholes not resolved (InProgress or Submitted): {{ nonResolvedCount }}</p>
+    </mat-card-content>
+</mat-card>
+<button mat-raised-button color="primary" (click)="reportPothole()">
+    Report a Pothole
+</button>
+<div class="dashboard-container">
+    
+    
+    <mat-table [dataSource]="reports" class="mat-elevation-z8">
+      
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+        <mat-cell *matCellDef="let report"> {{ report.id }} </mat-cell>
+      </ng-container>
+  
+      <!-- Type Column -->
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+        <mat-cell *matCellDef="let report"> {{ report.type }} </mat-cell>
+      </ng-container>
+  
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+        <mat-cell *matCellDef="let report"> {{ report.status }} </mat-cell>
+      </ng-container>
+  
+      <!-- Location Column -->
+      <ng-container matColumnDef="location">
+        <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
+        <mat-cell *matCellDef="let report"> {{ report.location }} </mat-cell>
+      </ng-container>
+  
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+        <mat-cell *matCellDef="let report"> {{ report.description }} </mat-cell>
+      </ng-container>
+  
+      <!-- Created At Column -->
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef> Created At </mat-header-cell>
+        <mat-cell *matCellDef="let report"> {{ report.created_at | date }} </mat-cell>
+      </ng-container>
+  
+      <!-- Updated At Column -->
+      <ng-container matColumnDef="updatedAt">
+        <mat-header-cell *matHeaderCellDef> Updated At </mat-header-cell>
+        <mat-cell *matCellDef="let report"> {{ report.updated_at | date }} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </div>
+  

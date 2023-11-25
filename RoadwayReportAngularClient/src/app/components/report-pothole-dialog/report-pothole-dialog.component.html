@@ -1,0 +1,26 @@
+<!-- report-pothole-dialog.component.html -->
+<h2 mat-dialog-title>Report a Pothole</h2>
+<mat-dialog-content>
+  <p>The City of Miami Public Works Department fixes potholes on paved surfaces.</p>
+  <mat-form-field>
+    <mat-label>Full Name</mat-label>
+    <input matInput placeholder="example: John Doe">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email address</mat-label>
+    <input matInput type="email" placeholder="example@example.com">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Message</mat-label>
+    <textarea matInput placeholder="Message sent to the Miami gov"></textarea>
+  </mat-form-field>
+  <div>
+    <input type="file" id="file">
+    <label for="file">Choose file</label>
+    <span>No file chosen</span>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button color="primary">Submit Issue</button>
+</mat-dialog-actions>

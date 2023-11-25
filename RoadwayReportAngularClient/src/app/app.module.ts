@@ -8,11 +8,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { ReportPotholeDialogComponent } from './components/report-pothole-dialog/report-pothole-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent,
+    ReportPotholeDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +30,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatInputModule,
     MatButtonModule,
     BrowserAnimationsModule,
+    MatTableModule,
+    MatCardModule,
+    MatDialogModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

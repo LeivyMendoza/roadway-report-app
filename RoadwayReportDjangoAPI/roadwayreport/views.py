@@ -100,8 +100,7 @@ def login_view(request):
 
 @api_view(['GET'])
 def dashboard_info(request):
-    user = request.user
-    reports = Report.objects.filter(user=user)
+    reports = Report.objects.all()  # Fetch all reports
     serializer = ReportSerializer(reports, many=True)
     return Response(serializer.data)
 

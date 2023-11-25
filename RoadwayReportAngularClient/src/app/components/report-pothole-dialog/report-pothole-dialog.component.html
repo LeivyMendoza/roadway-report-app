@@ -1,26 +1,39 @@
 <!-- report-pothole-dialog.component.html -->
 <h2 mat-dialog-title>Report a Pothole</h2>
-<mat-dialog-content>
-  <p>The City of Miami Public Works Department fixes potholes on paved surfaces.</p>
-  <mat-form-field>
-    <mat-label>Full Name</mat-label>
-    <input matInput placeholder="example: John Doe">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Email address</mat-label>
-    <input matInput type="email" placeholder="example@example.com">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Message</mat-label>
-    <textarea matInput placeholder="Message sent to the Miami gov"></textarea>
-  </mat-form-field>
-  <div>
-    <input type="file" id="file">
-    <label for="file">Choose file</label>
-    <span>No file chosen</span>
-  </div>
+<mat-dialog-content class="report-dialog-content">
+  <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <input matInput formControlName="type" placeholder="Enter type of issue">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option value="Submitted">Submitted</mat-option>
+        <mat-option value="InProgress">In Progress</mat-option>
+        <!-- You might not need the Resolved option in the report form -->
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Location</mat-label>
+      <input matInput formControlName="location" placeholder="Enter location">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Describe the issue"></textarea>
+    </mat-form-field>
+
+    <div>
+    <input type="file" id="file" formControlName="file" hidden (change)="onFileSelected($event)">
+    <label for="file" mat-raised-button>Upload Picture or Documents</label>
+    <span>{{ fileName }}</span>
+    </div>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button color="primary">Submit Issue</button>
+  <button mat-button color="primary" [disabled]="!reportForm.valid" (click)="onSubmit()">Submit Issue</button>
 </mat-dialog-actions>

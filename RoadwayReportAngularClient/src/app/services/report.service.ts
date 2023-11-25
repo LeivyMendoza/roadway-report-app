@@ -13,4 +13,10 @@ export class ReportService {
   getReports(): Observable<any> {
     return this.http.get(this.apiUrl);
   }
+
+  submitReport(formData: FormData): Observable<any> {
+    // Use the full URL for the Django endpoint
+    const fullUrl = 'http://localhost:8000/report/';
+    return this.http.post(fullUrl, formData);
+  }
 }

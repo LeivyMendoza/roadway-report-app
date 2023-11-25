@@ -30,17 +30,10 @@ class LeaderboardSerializer(serializers.ModelSerializer):
                   'reports_count')
         
 class ReportSerializer(serializers.ModelSerializer):
- 
     class Meta:
         model = Report
-        fields = ('id',
-                  'type',
-                  'status',
-                  'location',
-                  'description',
-                  'created_at',
-                  'updated_at',
-                  'user')
+        fields = ['user', 'type', 'status', 'location', 'description', 'created_at', 'updated_at']
+        read_only_fields = ('user',)
 
 class NotificationSerializer(serializers.ModelSerializer):
  

@@ -1,5 +1,6 @@
+// login.component.ts
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // Add this import
+import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 
 @Component({
@@ -11,19 +12,17 @@ export class LoginComponent {
   email: string = '';
   password: string = '';
 
-  constructor(private loginService: LoginService, private router: Router) {} // Inject Router here
+  constructor(private loginService: LoginService, private router: Router) {}
 
   onLogin(): void {
     this.loginService.login(this.email, this.password).subscribe(
       data => {
-        console.log('Login success', data);
-        // Redirect to dashboard on successful login
+        localStorage.setItem('authToken', data.access); // Use 'access' token for JWT
         this.router.navigate(['/dashboard']);
       },
       error => {
         console.error('Login error', error);
         // Handle login error
-        // Optionally show an error message to the user
       }
     );
   }

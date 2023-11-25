@@ -1,8 +1,11 @@
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework import generics, permissions
-from rest_framework.decorators import api_view
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from rest_framework import viewsets
 from .models import Official, User, Leaderboard, Report, Notification, Media, Comment
 from .serializers import (
     OfficialSerializer, UserSerializer, LeaderboardSerializer,
@@ -47,6 +50,10 @@ class ReportDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Report.objects.all()
     serializer_class = ReportSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+class ReportViewSet(viewsets.ModelViewSet):
+    queryset = Report.objects.all()
+    serializer_class = ReportSerializer
 
 # Notification ViewSet
 class NotificationListCreate(generics.ListCreateAPIView):
@@ -105,8 +112,18 @@ def dashboard_info(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
+@login_required
+@permission_classes([IsAuthenticated])
 def report_pothole(request):
-    pass
+    serializer = ReportSerializer(data=request.data)
+
+    if serializer.is_valid():
+        # Set the user to the currently authenticated user
+        serializer.save(user=request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def confirmation(request):

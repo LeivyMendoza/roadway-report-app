@@ -147,3 +147,9 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 AUTH_USER_MODEL = 'roadwayreport.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}

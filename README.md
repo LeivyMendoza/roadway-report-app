@@ -1,4 +1,5 @@
 Roadway Report App
+
 The Roadway Report App is a web application developed with Angular (Frontend), Django (Backend), and PostgreSQL (Database) for reporting and tracking potholes in Miami Dade County. This document provides instructions on how to set up and run the project locally.
 
 Getting Started

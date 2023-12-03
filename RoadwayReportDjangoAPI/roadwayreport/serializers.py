@@ -23,11 +23,11 @@ class UserSerializer(serializers.ModelSerializer):
                   'password')
         
 class LeaderboardSerializer(serializers.ModelSerializer):
- 
+    user_email = serializers.EmailField(source='user.email', read_only=True)
+
     class Meta:
         model = Leaderboard
-        fields = ('user',
-                  'reports_count')
+        fields = ('user_email', 'reports_count')
         
 class ReportSerializer(serializers.ModelSerializer):
     class Meta:

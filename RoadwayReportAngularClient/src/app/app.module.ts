@@ -18,6 +18,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ConfirmationDialogComponent } from './components/confirmation-dialog/confirmation-dialog.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { LeaderboardCardComponent } from './components/leaderboard-card/leaderboard-card.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     LoginComponent,
     DashboardComponent,
     ReportPotholeDialogComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    LeaderboardCardComponent
   ],
   imports: [
     BrowserModule,

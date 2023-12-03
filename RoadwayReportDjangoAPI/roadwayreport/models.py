@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Custom User Manager
 class UserManager(BaseUserManager):
@@ -98,3 +100,11 @@ class Notification(models.Model):
 class Leaderboard(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     reports_count = models.IntegerField(default=0)
+
+@receiver(post_save, sender=Report)
+def update_leaderboard_on_new_report(sender, instance, created, **kwargs):
+    if created:
+        user = instance.user
+        leaderboard, created = Leaderboard.objects.get_or_create(user=user)
+        leaderboard.reports_count = Report.objects.filter(user=user).count()
+        leaderboard.save()

@@ -1,0 +1,7 @@
+<mat-card >
+    <mat-card-title>Leaderboard</mat-card-title>
+    <mat-card-content *ngFor="let item of leaderboard">
+        <p>Username: {{ item.user_email }}</p>
+        <p>Reports Count: {{ item.reports_count }}</p>
+    </mat-card-content>
+</mat-card>

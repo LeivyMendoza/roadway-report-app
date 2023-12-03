@@ -8,10 +8,10 @@ These instructions will get you a copy of the project up and running on your loc
 Prerequisites
 What things you need to install the software and how to install them:
 
-Node.js and npm
-Python
-Django
-Angular CLI
+Node.js and npm,
+Python,
+Django,
+Angular CLI,
 PostgreSQL
 
 Installing
@@ -34,18 +34,6 @@ source venv/bin/activate
 
 Install the required packages:
 pip install -r requirements.txt
-
-Set up your database connection in Django's settings.py. Update the DATABASES setting to use PostgreSQL:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'roadwayreport',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '5432',
-    }
-}
 
 Run migrations to set up the database schema:
 python manage.py migrate

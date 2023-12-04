@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReportPotholeDialogComponent } from '../report-pothole-dialog/report-pothole-dialog.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -21,6 +22,18 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadReports()
+  }
+
+  addComment(report: any) {
+    // Implement the logic to open a dialog or navigate to a comment page for the selected report.
+    // You can use Angular Material dialogs or create a new component for adding comments.
+  }
+
+  openCommentDialog(report: any) {
+    const dialogRef = this.dialog.open(CommentDialogComponent, {
+      width: '400px', // Adjust the width as needed
+      data: { report: report } // Pass the selected report to the dialog
+    });
   }
 
   loadReports(): void {

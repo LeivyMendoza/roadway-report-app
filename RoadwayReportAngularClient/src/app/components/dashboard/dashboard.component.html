@@ -58,6 +58,15 @@
         <mat-header-cell *matHeaderCellDef> Updated At </mat-header-cell>
         <mat-cell *matCellDef="let report"> {{ report.updated_at | date }} </mat-cell>
       </ng-container>
+
+      <ng-container matColumnDef="comments">
+        <mat-header-cell *matHeaderCellDef> Comments </mat-header-cell>
+        <mat-cell *matCellDef="let report">
+          <button mat-icon-button (click)="openCommentDialog(report)">
+            <mat-icon>comment</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

@@ -20,6 +20,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LeaderboardCardComponent } from './components/leaderboard-card/leaderboard-card.component';
 import { RegisterComponent } from './components/register/register.component';
+import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { RegisterComponent } from './components/register/register.component';
     ReportPotholeDialogComponent,
     ConfirmationDialogComponent,
     LeaderboardCardComponent,
-    RegisterComponent
+    RegisterComponent,
+    CommentDialogComponent
   ],
   imports: [
     BrowserModule,

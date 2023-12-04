@@ -16,7 +16,7 @@ export class LeaderboardCardComponent implements OnInit {
   ngOnInit(): void {
     this.leaderboardService.getLeaderboard().subscribe(
       data => {
-        this.leaderboard = data;
+        this.leaderboard = data.sort((a, b) => b.reports_count - a.reports_count);
       },
       error => console.error('Error fetching leaderboard data', error)
     );

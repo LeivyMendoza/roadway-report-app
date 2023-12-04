@@ -14,11 +14,12 @@ export class RegisterComponent {
   cpassword: string = '';
   driver_license_number: string = '';
   errorMessage: string = '';
+  isOfficial: boolean = false;
 
   constructor(private userService: UserService, private router: Router) {}
 
   onRegister(): void {
-    const userData = { email: this.email, driver_license_number: this.driver_license_number, password: this.password };
+    const userData = { email: this.email, driver_license_number: this.driver_license_number, password: this.password, isOfficial: this.isOfficial };
     this.userService.registerUser(userData).subscribe(
       data => {
         console.log('Registration successful', data);

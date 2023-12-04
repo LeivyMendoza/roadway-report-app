@@ -15,8 +15,12 @@ urlpatterns = [
     # JWT Auth
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
     path('api/leaderboard/', views.LeaderboardList.as_view(), name='leaderboard'),
     path('api/register/', views.register_user, name='user-registration'),
     path('api/comments/', views.comment_list_create, name='comment-list-create'),
     path('api/comments/report/<int:report_id>/', views.get_comments_for_report, name='get_comments_for_report'),
+    path('api/check_if_official/', views.check_if_official, name='check_if_official'),
+    path('api/users/manage/', views.manage_users, name='manage_users'),
+    path('api/users/delete/<int:user_id>/', views.delete_user, name='delete_user'),
 ]

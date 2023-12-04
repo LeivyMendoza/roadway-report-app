@@ -1,11 +1,11 @@
 from rest_framework import status, viewsets
 from rest_framework import generics, permissions
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
@@ -192,3 +192,43 @@ def get_comments_for_report(request, report_id):
     comments = Comment.objects.filter(report_id=report_id)
     serializer = CommentSerializer(comments, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def check_if_official(request):
+    user = request.user
+    is_official = user.is_official if hasattr(user, 'is_official') else False
+    return Response({"is_official": is_official})
+
+def is_official(user):
+    return user.is_official
+
+@login_required
+@user_passes_test(is_official)
+def some_view(request):
+    pass
+
+@api_view(['GET', 'POST'])
+@user_passes_test(is_official)
+def manage_users(request):
+    if request.method == 'GET':
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+    
+    elif request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+@api_view(['DELETE'])
+@user_passes_test(is_official)
+def delete_user(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        user.delete()
+        return Response(status=204)
+    except User.DoesNotExist:
+        return Response(status=404)

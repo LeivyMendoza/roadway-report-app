@@ -13,6 +13,7 @@ class OfficialSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)  # Add password field
+    isOfficial = serializers.BooleanField(write_only=True, required=False)
 
     class Meta:
         model = User
@@ -21,14 +22,18 @@ class UserSerializer(serializers.ModelSerializer):
                   'email',
                   'driver_license_number',
                   'phone_number',
-                  'password')  # Include 'password' in fields
+                  'password',
+                  'isOfficial')  # Include 'password' in fields
 
     def create(self, validated_data):
+        is_official = validated_data.pop('isOfficial', False)
         user = User(
             email=validated_data['email'],
             driver_license_number=validated_data['driver_license_number'],
         )
         user.set_password(validated_data['password'])  # Hash the password
+        if is_official:
+            user.is_official = True
         user.save()
         return user
         

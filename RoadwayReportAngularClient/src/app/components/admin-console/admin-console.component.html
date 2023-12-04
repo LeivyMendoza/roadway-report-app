@@ -1,0 +1,36 @@
+<div class="admin-console">
+    <h2>Admin Console - User Management</h2>
+    
+    <!-- User List -->
+    <div *ngFor="let user of users">
+      <p>{{ user.email }} - <button (click)="deleteUser(user.id)">Delete</button></p>
+    </div>
+  
+    <!-- Add User Form -->
+    <form (ngSubmit)="addUser(newUserForm.value)" #newUserForm="ngForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" ngModel name="email" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" ngModel name="password" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Driver's License Number</mat-label>
+        <input matInput type="text" ngModel name="driver_license_number" required>
+      </mat-form-field>
+  
+      <mat-checkbox [(ngModel)]="isOfficial" name="isOfficial">Admin/Official Account</mat-checkbox>
+  
+      <button mat-raised-button color="primary" type="submit" [disabled]="!newUserForm.valid">Add User</button>
+    </form>
+  
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+  

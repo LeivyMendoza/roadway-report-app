@@ -31,6 +31,17 @@ class UserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
+    
+    def create_official(self, email, driver_license_number, phone_number, password):
+        user = self.create_user(
+            email=email,
+            password=password,
+            driver_license_number=driver_license_number,
+            phone_number=phone_number
+        )
+        user.is_official = True
+        user.save(using=self._db)
+        return user
 
 # Custom User Model
 class User(AbstractBaseUser):
@@ -38,6 +49,7 @@ class User(AbstractBaseUser):
     driver_license_number = models.CharField(max_length=255, unique=True)
     phone_number = models.CharField(max_length=255, null=True, blank=True)
     password = models.CharField(max_length=255)
+    is_official = models.BooleanField(default=False)
 
     objects = UserManager()
 

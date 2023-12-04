@@ -22,6 +22,8 @@ import { LeaderboardCardComponent } from './components/leaderboard-card/leaderbo
 import { RegisterComponent } from './components/register/register.component';
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AdminConsoleComponent } from './components/admin-console/admin-console.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { MatIconModule } from '@angular/material/icon';
     ConfirmationDialogComponent,
     LeaderboardCardComponent,
     RegisterComponent,
-    CommentDialogComponent
+    CommentDialogComponent,
+    AdminConsoleComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +52,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatSelectModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatCheckboxModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -6,6 +6,8 @@ import { ReportPotholeDialogComponent } from '../report-pothole-dialog/report-po
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,13 +17,23 @@ import { CommentDialogComponent } from '../comment-dialog/comment-dialog.compone
 export class DashboardComponent implements OnInit {
   reports: any[] = [];
   nonResolvedCount: number = 0;
+  isAdminUser: boolean = false;
   displayedColumns: string[] = ['rowIndex', 'type', 'status', 'location', 'description', 'createdAt', 'updatedAt', 'comments'];
   private destroy$ = new Subject<void>();
 
-  constructor(private dialog: MatDialog, private reportService: ReportService) { }
+  constructor(private dialog: MatDialog, private userService: UserService, private router: Router, private reportService: ReportService) { }
 
   ngOnInit(): void {
-    this.loadReports()
+    this.loadReports();
+    this.userService.isAdmin().subscribe(
+      data => {
+        this.isAdminUser = data.is_official;
+      },
+      error => {
+        console.error('Error checking admin status', error);
+        this.isAdminUser = false;
+      }
+    );
   }
 
   openCommentDialog(rowIndex: number) {
@@ -46,6 +58,10 @@ export class DashboardComponent implements OnInit {
     );
   }
   
+  navigateToAdminConsole(): void {
+    this.router.navigate(['/admin-console']); // Replace with your actual route
+  }
+
   reportPothole(): void {
     const dialogRef = this.dialog.open(ReportPotholeDialogComponent, {
       width: '600px',

@@ -232,3 +232,24 @@ def delete_user(request, user_id):
         return Response(status=204)
     except User.DoesNotExist:
         return Response(status=404)
+    
+@api_view(['DELETE'])
+@user_passes_test(is_official)
+def delete_report(request, report_id):
+    try:
+        report = Report.objects.get(id=report_id)
+        report.delete()
+        return Response(status=204)
+    except Report.DoesNotExist:
+        return Response(status=404)
+    
+@api_view(['PATCH'])
+@user_passes_test(is_official)
+def update_report_status(request, report_id):
+    try:
+        report = Report.objects.get(id=report_id)
+        report.status = request.data.get('status')
+        report.save()
+        return Response(status=200)
+    except Report.DoesNotExist:
+        return Response(status=404)

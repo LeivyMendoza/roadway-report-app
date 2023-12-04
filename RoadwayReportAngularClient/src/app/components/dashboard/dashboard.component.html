@@ -22,7 +22,7 @@
   </button>
 
   <button *ngIf="isAdminUser" (click)="navigateToAdminConsole()">Admin Console</button>
-  
+
   <div class="dashboard-container">
     <mat-table [dataSource]="reports" class="mat-elevation-z8">
       <ng-container matColumnDef="rowIndex">
@@ -86,6 +86,24 @@
           </button>
         </mat-cell>
       </ng-container>
+
+      <!-- Delete Column -->
+    <ng-container *ngIf="isAdminUser" matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+      <mat-cell *matCellDef="let report; let i = index">
+        <button mat-icon-button color="warn" (click)="onDeleteReport(i + 1)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Update Status Column -->
+    <ng-container *ngIf="isAdminUser" matColumnDef="updateStatus">
+      <mat-header-cell *matHeaderCellDef> Update Status </mat-header-cell>
+      <mat-cell *matCellDef="let report; let i = index">
+        <button mat-button (click)="onUpdateReportStatus(i + 1)">Update Status</button>
+      </mat-cell>
+    </ng-container>
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

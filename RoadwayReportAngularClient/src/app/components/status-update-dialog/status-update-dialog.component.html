@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Update Status</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Status</mat-label>
+    <mat-select [(value)]="selectedStatus">
+      <mat-option *ngFor="let status of statuses" [value]="status">
+        {{ status }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [mat-dialog-close]="selectedStatus" cdkFocusInitial>Update</button>
+</div>

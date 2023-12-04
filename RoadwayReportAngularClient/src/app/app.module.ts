@@ -24,6 +24,7 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
 import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AdminConsoleComponent } from './components/admin-console/admin-console.component';
+import { StatusUpdateDialogComponent } from './components/status-update-dialog/status-update-dialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { AdminConsoleComponent } from './components/admin-console/admin-console.
     LeaderboardCardComponent,
     RegisterComponent,
     CommentDialogComponent,
-    AdminConsoleComponent
+    AdminConsoleComponent,
+    StatusUpdateDialogComponent
   ],
   imports: [
     BrowserModule,

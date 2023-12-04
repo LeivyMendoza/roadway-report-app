@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CommentDialogComponent } from '../comment-dialog/comment-dialog.component';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { StatusUpdateDialogComponent } from '../status-update-dialog/status-update-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,14 +25,21 @@ export class DashboardComponent implements OnInit {
   constructor(private dialog: MatDialog, private userService: UserService, private router: Router, private reportService: ReportService) { }
 
   ngOnInit(): void {
-    this.loadReports();
-    this.userService.isAdmin().subscribe(
+    this.userService.isAdmin().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(
       data => {
         this.isAdminUser = data.is_official;
+        // Update the columns inside the subscription
+        if (this.isAdminUser) {
+          this.displayedColumns.push('delete', 'updateStatus');
+        }
+        this.loadReports();
       },
       error => {
         console.error('Error checking admin status', error);
         this.isAdminUser = false;
+        this.loadReports();
       }
     );
   }
@@ -71,6 +79,42 @@ export class DashboardComponent implements OnInit {
       takeUntil(this.destroy$)
     ).subscribe(() => {
       this.loadReports(); // Refresh reports when a report is submitted
+    });
+  }
+
+  onDeleteReport(reportId: number): void {
+    if (confirm('Are you sure you want to delete this report?')) {
+      this.reportService.deleteReport(reportId).subscribe(
+        () => {
+          // Handle successful deletion
+          // For example, you could refresh the report list:
+          this.loadReports(); // Assuming you have a method to load reports
+        },
+        error => {
+          console.error('Error deleting report:', error);
+        }
+      );
+    }
+  }
+
+  onUpdateReportStatus(reportId: any): void {  // Pass the entire report object
+    const dialogRef = this.dialog.open(StatusUpdateDialogComponent, {
+      width: '250px',
+      data: { reportId: reportId}
+    });
+  
+    dialogRef.afterClosed().subscribe(newStatus => {
+      if (newStatus) {
+        this.reportService.updateReportStatus(reportId, newStatus).subscribe(
+          () => {
+            // Handle successful status update
+            this.loadReports(); // Refresh the report list
+          },
+          error => {
+            console.error('Error updating report status:', error);
+          }
+        );
+      }
     });
   }
 

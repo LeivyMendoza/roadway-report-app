@@ -23,4 +23,6 @@ urlpatterns = [
     path('api/check_if_official/', views.check_if_official, name='check_if_official'),
     path('api/users/manage/', views.manage_users, name='manage_users'),
     path('api/users/delete/<int:user_id>/', views.delete_user, name='delete_user'),
+    path('api/reports/delete/<int:report_id>/', views.delete_report, name='delete_report'),
+    path('api/reports/update_status/<int:report_id>/', views.update_report_status, name='update_report_status'),
 ]

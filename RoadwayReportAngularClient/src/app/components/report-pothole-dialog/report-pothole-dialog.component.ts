@@ -34,12 +34,13 @@ export class ReportPotholeDialogComponent implements OnInit {
   }
 
   onFileSelected(event: Event): void {
-    const element = event.target as HTMLInputElement;
-    const file = element.files && element.files.length > 0 ? element.files[0] : null;
-    if (file) {
-      this.reportForm.patchValue({ file: file });
-      this.fileName = file.name;
-    } else {
+    const input = event.target as HTMLInputElement;
+
+  if (input && input.files && input.files.length) {
+    const file = input.files[0];
+    this.reportForm.patchValue({ file: file });
+    this.fileName = file.name;
+  } else {
       // Handle the case where no file was selected
       this.fileName = 'No file chosen';
     }

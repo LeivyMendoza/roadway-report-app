@@ -27,7 +27,7 @@
     </mat-form-field>
 
     <div>
-    <input type="file" id="file" formControlName="file" hidden (change)="onFileSelected($event)">
+    <input type="file" (change)="onFileSelected($event)">
     <label for="file" mat-raised-button>Upload Picture or Documents</label>
     <span>{{ fileName }}</span>
     </div>

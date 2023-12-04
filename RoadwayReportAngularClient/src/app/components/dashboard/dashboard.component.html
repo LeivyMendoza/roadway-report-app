@@ -17,6 +17,11 @@
     
     <mat-table [dataSource]="reports" class="mat-elevation-z8">
       
+      <ng-container matColumnDef="rowIndex">
+        <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+        <mat-cell *matCellDef="let element; let i = index"> {{ i + 1 }} </mat-cell>
+      </ng-container>
+
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
@@ -61,8 +66,8 @@
 
       <ng-container matColumnDef="comments">
         <mat-header-cell *matHeaderCellDef> Comments </mat-header-cell>
-        <mat-cell *matCellDef="let report">
-          <button mat-icon-button (click)="openCommentDialog(report)">
+        <mat-cell *matCellDef="let i = index">
+          <button mat-icon-button (click)="openCommentDialog(i)">
             <mat-icon>comment</mat-icon>
           </button>
         </mat-cell>

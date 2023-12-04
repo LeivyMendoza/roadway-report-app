@@ -17,4 +17,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/leaderboard/', views.LeaderboardList.as_view(), name='leaderboard'),
     path('api/register/', views.register_user, name='user-registration'),
+    path('api/comments/', views.comment_list_create, name='comment-list-create'),
+    path('api/comments/report/<int:report_id>/', views.get_comments_for_report, name='get_comments_for_report'),
 ]

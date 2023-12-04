@@ -21,6 +21,7 @@ import { AuthInterceptor } from './auth/auth.interceptor';
 import { LeaderboardCardComponent } from './components/leaderboard-card/leaderboard-card.component';
 import { RegisterComponent } from './components/register/register.component';
 import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CommentDialogComponent } from './components/comment-dialog/comment-dial
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatIconModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

@@ -8,6 +8,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 from .models import Official, User, Leaderboard, Report, Notification, Media, Comment
 from .serializers import (
     OfficialSerializer, UserSerializer, LeaderboardSerializer,
@@ -81,10 +83,15 @@ class MediaDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
 # Comment ViewSet
+@method_decorator(csrf_exempt, name='dispatch')
 class CommentListCreate(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all()
@@ -165,3 +172,23 @@ def confirmation(request):
         return Response({'id': report.id, 'status': report.status})
     except Report.DoesNotExist:
         return Response({'error': 'Report not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET', 'POST'])
+def comment_list_create(request):
+    if request.method == 'GET':
+        comments = Comment.objects.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = CommentSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['GET'])
+def get_comments_for_report(request, report_id):
+    comments = Comment.objects.filter(report_id=report_id)
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)

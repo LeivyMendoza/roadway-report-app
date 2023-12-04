@@ -15,7 +15,7 @@ import { CommentDialogComponent } from '../comment-dialog/comment-dialog.compone
 export class DashboardComponent implements OnInit {
   reports: any[] = [];
   nonResolvedCount: number = 0;
-  displayedColumns: string[] = ['id', 'type', 'status', 'location', 'description', 'createdAt', 'updatedAt'];
+  displayedColumns: string[] = ['rowIndex', 'type', 'status', 'location', 'description', 'createdAt', 'updatedAt', 'comments'];
   private destroy$ = new Subject<void>();
 
   constructor(private dialog: MatDialog, private reportService: ReportService) { }
@@ -24,15 +24,15 @@ export class DashboardComponent implements OnInit {
     this.loadReports()
   }
 
-  addComment(report: any) {
-    // Implement the logic to open a dialog or navigate to a comment page for the selected report.
-    // You can use Angular Material dialogs or create a new component for adding comments.
-  }
-
-  openCommentDialog(report: any) {
+  openCommentDialog(rowIndex: number) {
     const dialogRef = this.dialog.open(CommentDialogComponent, {
-      width: '400px', // Adjust the width as needed
-      data: { report: report } // Pass the selected report to the dialog
+      width: '400px', 
+      data: { reportId: rowIndex + 1 } 
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'comment_added') {
+        
+      }
     });
   }
 

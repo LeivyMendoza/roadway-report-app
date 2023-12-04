@@ -1,1 +1,10 @@
-<p>comment-dialog works!</p>
+<mat-dialog-content>
+    <h2>Add Comment</h2>
+    <mat-form-field>
+      <textarea matInput placeholder="Comment" [(ngModel)]="comment"></textarea>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button (click)="onAddComment()">Add Comment</button>
+  </mat-dialog-actions>

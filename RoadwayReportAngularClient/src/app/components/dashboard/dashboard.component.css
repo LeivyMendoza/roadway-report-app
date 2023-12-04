@@ -1,3 +1,12 @@
 .info-card {
     margin: 20px;
   }
+
+.dark-orange-button {
+    background-color: darkorange;
+    color: white; /* Adjust text color as needed */
+  }
+  
+.dark-orange-button:hover {
+    background-color: #e67e22; /* Darker shade for hover, adjust as needed */
+  }

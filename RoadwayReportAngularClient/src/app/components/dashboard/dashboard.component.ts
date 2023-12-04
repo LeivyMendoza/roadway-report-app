@@ -9,6 +9,7 @@ import { CommentDialogComponent } from '../comment-dialog/comment-dialog.compone
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { StatusUpdateDialogComponent } from '../status-update-dialog/status-update-dialog.component';
+import { FAQDialogComponent } from '../faqdialog/faqdialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -115,6 +116,12 @@ export class DashboardComponent implements OnInit {
           }
         );
       }
+    });
+  }
+
+  openFAQDialog(): void {
+    this.dialog.open(FAQDialogComponent, {
+      width: '600px'
     });
   }
 

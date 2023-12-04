@@ -21,13 +21,15 @@
     Report a Pothole
   </button>
 
-  <button *ngIf="isAdminUser" (click)="navigateToAdminConsole()">Admin Console</button>
+  <button mat-raised-button (click)="openFAQDialog()">FAQ / Help</button>
+
+  <button mat-raised-button class="dark-orange-button" *ngIf="isAdminUser" (click)="navigateToAdminConsole()">Admin Console</button>
 
   <div class="dashboard-container">
     <mat-table [dataSource]="reports" class="mat-elevation-z8">
       <ng-container matColumnDef="rowIndex">
         <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
-        <mat-cell *matCellDef="let element; let i = index">
+        <mat-cell *matCellDef="let element; let i = index"> 
           {{ i + 1 }}
         </mat-cell>
       </ng-container>

@@ -25,6 +25,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AdminConsoleComponent } from './components/admin-console/admin-console.component';
 import { StatusUpdateDialogComponent } from './components/status-update-dialog/status-update-dialog.component';
+import { FAQDialogComponent } from './components/faqdialog/faqdialog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { StatusUpdateDialogComponent } from './components/status-update-dialog/s
     RegisterComponent,
     CommentDialogComponent,
     AdminConsoleComponent,
-    StatusUpdateDialogComponent
+    StatusUpdateDialogComponent,
+    FAQDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -19,6 +19,7 @@ import { ConfirmationDialogComponent } from './components/confirmation-dialog/co
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LeaderboardCardComponent } from './components/leaderboard-card/leaderboard-card.component';
+import { RegisterComponent } from './components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LeaderboardCardComponent } from './components/leaderboard-card/leaderbo
     DashboardComponent,
     ReportPotholeDialogComponent,
     ConfirmationDialogComponent,
-    LeaderboardCardComponent
+    LeaderboardCardComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

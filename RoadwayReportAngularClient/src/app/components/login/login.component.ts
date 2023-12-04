@@ -11,8 +11,13 @@ import { LoginService } from 'src/app/services/login.service';
 export class LoginComponent {
   email: string = '';
   password: string = '';
+  errorMessage: string = '';
 
   constructor(private loginService: LoginService, private router: Router) {}
+
+  navigateToRegister(): void {
+    this.router.navigate(['/register']); // Update with your actual register route
+  }
 
   onLogin(): void {
     this.loginService.login(this.email, this.password).subscribe(
@@ -21,8 +26,11 @@ export class LoginComponent {
         this.router.navigate(['/dashboard']);
       },
       error => {
-        console.error('Login error', error);
-        // Handle login error
+        if (error.error && error.error.error) {
+          this.errorMessage = error.error.error;
+        } else {
+          this.errorMessage = 'An unexpected error occurred. Please check credentials.';
+        }
       }
     );
   }

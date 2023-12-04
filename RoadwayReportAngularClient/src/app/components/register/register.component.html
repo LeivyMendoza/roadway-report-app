@@ -1,0 +1,32 @@
+<!-- register.component.html -->
+<div class="register-container">
+    <h1>Create Account</h1>
+    <form (ngSubmit)="onRegister()">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" [(ngModel)]="email" name="email" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Driver's License Number</mat-label>
+        <input matInput type="driver_license_number" [(ngModel)]="driver_license_number" name="driver_license_number" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" [(ngModel)]="password" name="password" required>
+      </mat-form-field>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="cpassword" [(ngModel)]="cpassword" name="cpassword" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">Register</button>
+  
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+    </form>
+  </div>
+  

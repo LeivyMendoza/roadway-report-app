@@ -1,12 +1,13 @@
 from rest_framework import status, viewsets
 from rest_framework import generics, permissions
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
+from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Official, User, Leaderboard, Report, Notification, Media, Comment
 from .serializers import (
     OfficialSerializer, UserSerializer, LeaderboardSerializer,
@@ -90,6 +91,16 @@ class CommentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+class UserRegistrationView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['POST'])
 def login_view(request):
     email = request.data.get('email')
@@ -106,6 +117,24 @@ def login_view(request):
     else:
         # Authentication failed
         return Response({'error': 'Invalid credentials.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_user(request):
+    serializer = UserSerializer(data=request.data)
+    if serializer.is_valid():
+        # Save the user to the database
+        user = serializer.save()
+
+        # Generate a token for the user
+        refresh = RefreshToken.for_user(user)
+        tokens = {
+            'access': str(refresh.access_token),
+            'refresh': str(refresh)
+        }
+
+        return Response(tokens, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
 def dashboard_info(request):

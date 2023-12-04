@@ -12,7 +12,8 @@ class OfficialSerializer(serializers.ModelSerializer):
                   'password')
 
 class UserSerializer(serializers.ModelSerializer):
- 
+    password = serializers.CharField(write_only=True)  # Add password field
+
     class Meta:
         model = User
         fields = ('id',
@@ -20,7 +21,16 @@ class UserSerializer(serializers.ModelSerializer):
                   'email',
                   'driver_license_number',
                   'phone_number',
-                  'password')
+                  'password')  # Include 'password' in fields
+
+    def create(self, validated_data):
+        user = User(
+            email=validated_data['email'],
+            driver_license_number=validated_data['driver_license_number'],
+        )
+        user.set_password(validated_data['password'])  # Hash the password
+        user.save()
+        return user
         
 class LeaderboardSerializer(serializers.ModelSerializer):
     user_email = serializers.EmailField(source='user.email', read_only=True)

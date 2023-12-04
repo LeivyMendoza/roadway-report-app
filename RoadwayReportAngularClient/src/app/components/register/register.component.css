@@ -1,0 +1,11 @@
+/* register.component.css */
+.register-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .error-message {
+    color: red;
+  }
+  

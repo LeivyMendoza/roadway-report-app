@@ -1,20 +1,27 @@
 <div class="login-container">
-    <h1>RoadwayReport Login</h1>
-    <form (ngSubmit)="onLogin()">
-      <mat-form-field appearance="fill">
-        <mat-label>Email</mat-label>
-        <input matInput type="email" [(ngModel)]="email" name="email" required>
-      </mat-form-field>
-  
-      <mat-form-field appearance="fill">
-        <mat-label>Password</mat-label>
-        <input matInput type="password" [(ngModel)]="password" name="password" required>
-      </mat-form-field>
+  <h1>RoadwayReport Login</h1>
+  <form (ngSubmit)="onLogin()">
+    <!-- Email field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" [(ngModel)]="email" name="email" required>
+    </mat-form-field>
+
+    <!-- Password field -->
+    <mat-form-field appearance="fill">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" [(ngModel)]="password" name="password" required>
+    </mat-form-field>
+
+    <!-- Buttons placed below the email and password fields -->
+    <div class="button-group">
       <button mat-raised-button color="primary" type="submit">Login</button>
       <button mat-raised-button color="accent" type="button" (click)="navigateToRegister()">Create Account</button>
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-      </div>
-    </form>
-    
-  </div>
+    </div>
+
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </form>
+</div>

@@ -153,3 +153,5 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+
+GOOGLE_MAPS_API_KEY = 'AIzaSyDNam4pvDfo2IeYsaHD2R-YCpKaQgvUnW4'

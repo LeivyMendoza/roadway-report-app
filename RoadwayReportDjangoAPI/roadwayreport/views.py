@@ -1,3 +1,4 @@
+import requests
 from rest_framework import status, viewsets
 from rest_framework import generics, permissions
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
@@ -10,6 +11,9 @@ from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.http import JsonResponse
+from django.conf import settings
+from urllib.parse import urlencode
 from .models import Official, User, Leaderboard, Report, Notification, Media, Comment
 from .serializers import (
     OfficialSerializer, UserSerializer, LeaderboardSerializer,
@@ -253,3 +257,23 @@ def update_report_status(request, report_id):
         return Response(status=200)
     except Report.DoesNotExist:
         return Response(status=404)
+    
+@api_view(['GET'])
+def geocode_address(request):
+    address = request.GET.get('address', '')
+    api_key = settings.GOOGLE_MAPS_API_KEY
+    url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={api_key}"
+
+    try:
+        response = requests.get(url)
+        data = response.json()
+
+        # Check if the response from Google was successful
+        if response.status_code == 200:
+            return JsonResponse(data)
+        else:
+            # Handle cases where the Google API did not return a 200 response
+            return JsonResponse({'error': 'Error from Google Maps API'}, status=response.status_code)
+    except requests.RequestException as e:
+        # Handle any exceptions during the request to Google API
+        return JsonResponse({'error': str(e)}, status=500)

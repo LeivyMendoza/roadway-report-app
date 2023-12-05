@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/users/delete/<int:user_id>/', views.delete_user, name='delete_user'),
     path('api/reports/delete/<int:report_id>/', views.delete_report, name='delete_report'),
     path('api/reports/update_status/<int:report_id>/', views.update_report_status, name='update_report_status'),
+    path('api/geocode/', views.geocode_address, name='geocode_address'),
 ]

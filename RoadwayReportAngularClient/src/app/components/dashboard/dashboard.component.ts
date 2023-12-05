@@ -1,7 +1,7 @@
 // dashboard.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ReportService } from 'src/app/services/report.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ReportPotholeDialogComponent } from '../report-pothole-dialog/report-pothole-dialog.component';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,6 +10,8 @@ import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { StatusUpdateDialogComponent } from '../status-update-dialog/status-update-dialog.component';
 import { FAQDialogComponent } from '../faqdialog/faqdialog.component';
+import { MapComponent } from '../map/map.component';
+import { GeocodeService } from 'src/app/services/geocode.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,7 +25,13 @@ export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['rowIndex', 'type', 'status', 'location', 'description', 'createdAt', 'updatedAt', 'comments'];
   private destroy$ = new Subject<void>();
 
-  constructor(private dialog: MatDialog, private userService: UserService, private router: Router, private reportService: ReportService) { }
+  constructor(private dialog: MatDialog, 
+    private userService: UserService, 
+    private router: Router, 
+    private reportService: ReportService,
+    private geocodeService: GeocodeService,
+   //@Inject(MAT_DIALOG_DATA) public data: any
+    ) { }
 
   ngOnInit(): void {
     this.userService.isAdmin().pipe(
@@ -123,6 +131,18 @@ export class DashboardComponent implements OnInit {
     this.dialog.open(FAQDialogComponent, {
       width: '600px'
     });
+  }
+
+  openMap(address: string): void {
+    this.geocodeService.geocodeAddress(address).subscribe(
+      location => {
+        this.dialog.open(MapComponent, {
+          width: '600px',
+          data: { location }
+        });
+      },
+      error => console.error('Geocoding error:', error)
+    );
   }
 
   ngOnDestroy() {

@@ -55,7 +55,8 @@
       <!-- Location Column -->
       <ng-container matColumnDef="location">
         <mat-header-cell *matHeaderCellDef> Location </mat-header-cell>
-        <mat-cell *matCellDef="let report"> {{ report.location }} </mat-cell>
+        <mat-cell *matCellDef="let report">
+         <button mat-icon-button (click)="openMap(report.location)"> <mat-icon >place</mat-icon> </button>{{ report.location }} </mat-cell>
       </ng-container>
 
       <!-- Description Column -->
@@ -103,7 +104,7 @@
     <ng-container *ngIf="isAdminUser" matColumnDef="updateStatus">
       <mat-header-cell *matHeaderCellDef> Update Status </mat-header-cell>
       <mat-cell *matCellDef="let report; let i = index">
-        <button mat-button (click)="onUpdateReportStatus(i + 1)">Update Status</button>
+        <button mat-raised-button (click)="onUpdateReportStatus(i + 1)">Update Status</button>
       </mat-cell>
     </ng-container>
 

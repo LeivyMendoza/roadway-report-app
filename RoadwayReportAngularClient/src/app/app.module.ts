@@ -26,6 +26,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AdminConsoleComponent } from './components/admin-console/admin-console.component';
 import { StatusUpdateDialogComponent } from './components/status-update-dialog/status-update-dialog.component';
 import { FAQDialogComponent } from './components/faqdialog/faqdialog.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MapComponent } from './components/map/map.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { FAQDialogComponent } from './components/faqdialog/faqdialog.component';
     CommentDialogComponent,
     AdminConsoleComponent,
     StatusUpdateDialogComponent,
-    FAQDialogComponent
+    FAQDialogComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +60,7 @@ import { FAQDialogComponent } from './components/faqdialog/faqdialog.component';
     ReactiveFormsModule,
     MatIconModule,
     MatCheckboxModule,
+    GoogleMapsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
